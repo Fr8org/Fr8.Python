@@ -30,13 +30,6 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="fr8\controls.py" />
-    <Compile Include="fr8\data.py" />
-    <Compile Include="fr8\hub.py" />
-    <Compile Include="fr8\manifests.py" />
-    <Compile Include="fr8\terminal.py" />
-    <Compile Include="fr8\utility.py" />
-    <Compile Include="fr8\__init__.py" />
     <Compile Include="runserver.py" />
     <Compile Include="terminalTwitter\authentication.py" />
     <Compile Include="terminalTwitter\post_to_twitter.py" />
@@ -44,7 +37,6 @@
     <Compile Include="terminalTwitter\__init__.py" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="fr8\" />
     <Folder Include="terminalTwitter\" />
   </ItemGroup>
   <ItemGroup>
