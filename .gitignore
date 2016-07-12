@@ -3,4 +3,5 @@
 venv/
 bin/
 obj/
+deployment/
 *.pyc

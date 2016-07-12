@@ -44,6 +44,7 @@
     <Folder Include="terminalTwitter\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="deploy.ps1" />
     <Content Include="requirements.txt" />
     <Content Include="runtime.txt" />
   </ItemGroup>

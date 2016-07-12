@@ -11,6 +11,7 @@ import terminal
 # Flask app instance.
 app = Flask(__name__)
 
+
 # Terminal request handler.
 handler = fr8.terminal.TerminalHandler(
     terminal.terminal,

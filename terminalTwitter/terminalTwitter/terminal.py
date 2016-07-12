@@ -1,3 +1,4 @@
+import os
 import fr8.data
 
 twitter_consumer_key = 'j0CGin9tvfWEe5UrxsCcjC6fT'
@@ -7,8 +8,7 @@ twitter_callback_url = '/AuthenticationCallback/ProcessSuccessfulOAuthResponse?t
 web_service = fr8.data.WebServiceDTO(name='Twitter', icon_path='/Content/icons/web_services/twitter-icon-64x64.png')
 
 terminal_id = 'B9CC8E6D-69B0-4E41-BCBC-251F25E10E75'
-terminal_port = 38080
-terminal_endpoint = 'http://127.0.0.1:' + str(terminal_port)
+terminal_endpoint = os.environ.get('TERMINAL_URL', 'http://127.0.0.1:38080')
 
 terminal = fr8.data.TerminalDTO(
     id = terminal_id,
