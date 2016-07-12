@@ -1,23 +1,34 @@
 # Installing and running locally
-#### Installing python virtual environment
+## For windows users
 
-Python virtual environtment should be used.
-Run command prompt with python interpreter in PATH.
-Then change directory to Fr8-Root/terminalTwitter
+1. [Install Python Tools for Visual Studio](https://microsoft.github.io/PTVS/)
+2. Open Fr8Python.sln
+3. Set up virtual environment called "venv" for Python 2.7 for "terminalTwitter" project
+4. Install packages from "requirements.txt" 
+5. Run "terminalTwitter" project
 
-	> cd c:\workdir\fr8\terminalTwitter
-	> pip install virtualenv
-	> virtualenv venv
-	> venv\scripts\activate
+## Linux or Mac users
 
-#### Next step we should install dependencies into virtual environment:
+1. Install [Python 2.7](http://python.org/)
+2. Go to "root/terminalTwitter" folder
+3. Install virtual environment for Python
 
-	> pip install Flask
-	> pip install tweepy
 
-#### Next we should run self-hosted Flask application:
+		~ cd ~/fr8.python/terminalTwitter
+		~ pip install virtualenv
+		~ virtualenv venv
+		~ venv\scripts\activate
 
-	> python main.py
+4. Install required packages
+
+
+		~ pip install Flask
+		~ pip install tweepy
+
+5. Run self-hosted Flask application:
+
+
+		~ python runserver.py
 
 
 # Current SDK status
