@@ -8,11 +8,11 @@ class Handler(object):
     def __init__(self):
         self.auth_data = {}
 
-    def get_request_url(self):
+    def get_request_url(self, hub_url):
         auth = tweepy.OAuthHandler(
             terminal.twitter_consumer_key,
             terminal.twitter_consumer_secret,
-            terminal.twitter_callback_url
+            hub_url + terminal.twitter_callback_url
         )
 
         redirect_url = auth.get_authorization_url()

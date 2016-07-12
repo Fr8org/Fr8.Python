@@ -94,6 +94,39 @@ class ActivityResponseDTO(object):
         return dto
 
 
+class ActivityCategoryDTO(object):
+    def __init__(self, **kwargs):
+        self.name = kwargs.get('name')
+        self.icon_path = kwargs.get('icon_path')
+
+    def to_fr8_json(self):
+        return {
+            'name': self.name,
+            'iconPath': self.icon_path
+        }
+
+    @staticmethod
+    def from_fr8_json(json_data):
+        if not json_data:
+            return None
+
+        ac = ActivityCategoryDTO(
+            name=json_data.get('name'),
+            icon_path=json_data.get('iconPath')
+        )
+
+        return ac
+
+
+ActivityCategories = utility.enum(
+    MONITORS=ActivityCategoryDTO(name="Monitor", icon_path="/Content/icons/monitor-icon-64x64.png"),
+    RECEIVERS=ActivityCategoryDTO(name="Get", icon_path="/Content/icons/get-icon-64x64.png"),
+    PROCESSORS=ActivityCategoryDTO(name="Process", icon_path="/Content/icons/process-icon-64x64.png"),
+    FORWARDERS=ActivityCategoryDTO(name="Forward", icon_path="/Content/icons/forward-icon-64x64.png"),
+    SOLUTION=ActivityCategoryDTO(name="Solution")
+)
+
+
 class ActivityTemplateDTO(object):
     def __init__(self, **kwargs):
         self.id = kwargs.get('id')
@@ -102,6 +135,7 @@ class ActivityTemplateDTO(object):
         self.terminal = kwargs.get('terminal')
         self.web_service = kwargs.get('web_service')
         self.activity_category = kwargs.get('activity_category')
+        self.categories = kwargs.get('categories')
         self.needs_authentication = kwargs.get('needs_authentication', False)
         self.label = kwargs.get('label', '')
         self.activity_type = kwargs.get('activity_type', ActivityType.STANDARD)
@@ -113,7 +147,8 @@ class ActivityTemplateDTO(object):
             'name': self.name,
             'version': self.version,
             'terminal': self.terminal.to_fr8_json(),
-            'webService': self.web_service.to_fr8_json() if self.web_service is not None else None,
+            'webService': self.web_service.to_fr8_json() if self.web_service else None,
+            'categories': [x.to_fr8_json() for x in self.categories] if self.categories else None,
             'category': self.activity_category,
             'needsAuthentication': self.needs_authentication,
             'label': self.label,
@@ -131,6 +166,8 @@ class ActivityTemplateDTO(object):
             web_service=WebServiceDTO.from_fr8_json(json_data.get('webService')) if json_data.get('webService') else None,
             terminal=TerminalDTO.from_fr8_json(json_data.get('terminal')) if json_data.get('terminal') else None,
             activity_category=json_data.get('category'),
+            categories=[ActivityCategoryDTO.from_fr8_json(x) for x in json_data.get('categories')]\
+                if json_data.get('categories') else [],
             activity_type=json_data.get('type'),
             min_pane_width=json_data.get('minPaneWidth'),
             needs_authentication=json_data.get('needsAuthentication')

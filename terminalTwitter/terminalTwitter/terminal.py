@@ -2,7 +2,7 @@ import fr8.data
 
 twitter_consumer_key = 'j0CGin9tvfWEe5UrxsCcjC6fT'
 twitter_consumer_secret = 'yjSWPAqLOC5ABG8Yz1uAvsGEAWNph5IRThfnwjciAvobXh8Gc2'
-twitter_callback_url = 'http://localhost:30643/AuthenticationCallback/ProcessSuccessfulOAuthResponse?terminalName=terminalTwitter&terminalVersion=1'
+twitter_callback_url = '/AuthenticationCallback/ProcessSuccessfulOAuthResponse?terminalName=terminalTwitter&terminalVersion=1'
 
 web_service = fr8.data.WebServiceDTO(name='Twitter', icon_path='/Content/icons/web_services/twitter-icon-64x64.png')
 
@@ -27,6 +27,10 @@ post_to_twitter = fr8.data.ActivityTemplateDTO(
     terminal = terminal,
     web_service = web_service,
     activity_category = fr8.data.ActivityCategory.FORWARDERS,
+    categories = [
+        fr8.data.ActivityCategories.FORWARDERS,
+        fr8.data.ActivityCategoryDTO(name=web_service.name, icon_path=web_service.icon_path)
+    ],
     needs_authentication = True,
     label = 'Post To Twitter'
 )

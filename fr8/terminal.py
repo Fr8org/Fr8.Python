@@ -28,11 +28,13 @@ class TerminalHandler(object):
         discover_data = manifests.StandardFr8TerminalCM(terminal=self.terminal, activities=activity_templates)
         return discover_data.to_fr8_json()
 
-    def auth_request_url(self):
+    def auth_request_url(self, request):
         if not self.authentication_handler:
             raise 'No authentication handler registered for TerminalHandler'
 
-        request_url_data = self.authentication_handler.get_request_url()
+        hub_url = request.headers.get('FR8HUBCALLBACKURL')
+
+        request_url_data = self.authentication_handler.get_request_url(hub_url)
         return request_url_data.to_fr8_json()
 
     def auth_token(self, request):
