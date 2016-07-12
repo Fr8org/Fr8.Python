@@ -7,7 +7,7 @@
 4. Install packages from "requirements.txt" 
 5. Run "terminalTwitter" project
 
-## Linux or Mac users
+## For Linux or Mac users
 
 1. Install [Python 2.7](http://python.org/)
 2. Go to "root/terminalTwitter" folder
