@@ -28,7 +28,7 @@
 5. Run self-hosted Flask application:
 
 
-		~ python runserver.py
+		~ export PYTHONPATH=".." && python runserver.py
 
 
 # Current SDK status
