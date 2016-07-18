@@ -1,11 +1,5 @@
-import base64
 import json
-import hashlib
-import hmac
-import time
-import urllib
 import urllib2
-import uuid
 
 import data
 
@@ -24,36 +18,22 @@ class Hub(object):
 
     def get_payload(self):
         payload_url = self.hub_url + 'api/v1/containers/payload?id=' + self.container_id
-        hmac_header = Hub.generate_hmac_header(
-            urllib.quote(payload_url, safe=''),
-            self.terminal_id,
+        auth_header = Hub.generate_authentication_header(
             self.terminal_secret,
             self.user_id
         )
 
         headers = {
-            "Authorization": "hmac " + hmac_header
+            "Authorization": "FR8-TOKEN " + auth_header
         }
         request = urllib2.Request(payload_url, headers=headers)
         contents = urllib2.urlopen(request).read()
         return data.PayloadDTO.from_fr8_json(json.loads(contents))
 
     @staticmethod
-    def generate_hmac_header(url, terminal_id, terminal_secret, user_id, content = bytearray()):
-        timestamp = str(int(time.time()))
-        nonce = uuid.uuid4()
+    def generate_authentication_header(terminal_secret, user_id):
+        result = 'key=' + terminal_secret
+        if user_id:
+            result += ', user=' + user_id
 
-        m = hashlib.md5()
-        m.update(content)
-        md5_digest = m.digest()
-        md5_base64 = base64.b64encode(md5_digest)
-
-        raw = terminal_id + url + timestamp + str(nonce) + md5_base64 + user_id
-        key_bytes = bytearray(str(terminal_secret))
-        message_bytes = bytearray(raw, 'utf-8')
-
-        hmac_digest = hmac.new(key_bytes, message_bytes, hashlib.sha512).digest()
-        hmac_base64 = base64.b64encode(hmac_digest)
-
-        result = terminal_id + ":" + hmac_base64 + ":" + str(nonce) + ":" + timestamp + ":" + user_id
         return result
