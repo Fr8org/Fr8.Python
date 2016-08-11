@@ -11,7 +11,7 @@ The Python SDK services are admittedly in an early stage of development. (To get
 
 Currently, this repository contains a single Terminal, the Fr8 Twitter Terminal. This Terminal exposes useful Twitter services to Fr8 Plans via a set of Activities.
 
-Join the discussion here in the Issues list and in the #fr8dev-ruby channel on the [public Fr8 Slack Team](http://slack.fr8.co).
+Join the discussion here in the Issues list and in the #fr8dev-python channel on the [public Fr8 Slack Team](http://slack.fr8.co).
 
 
 ## Developing a Fr8 Terminal
