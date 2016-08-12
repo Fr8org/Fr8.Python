@@ -59,6 +59,6 @@ def deactivate():
 
 
 # Run end-point.
-@app.route('/activities/Run', methods=['POST'])
+@app.route('/activities/run', methods=['POST'])
 def run():
     return jsonify(handler.run(request))

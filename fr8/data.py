@@ -15,8 +15,6 @@ TerminalStatus = utility.enum(ACTIVE=1, INACTIVE=0)
 
 AuthenticationType = utility.enum(NONE=1, INTERNAL=2, EXTERNAL=3, INTERNAL_WITH_DOMAIN=4)
 
-ActivityCategory = utility.enum(MONITORS=1, RECEIVERS=2, PROCESSORS=3, FORWARDERS=4, SOLUTION=5)
-
 ActivityType = utility.enum(STANDARD=1, LOOP=2, SOLUTION=3)
 
 AvailabilityType = utility.enum(NOTSET=0, CONFIGURATION=1, RUNTIME=2, ALWAYS=3)
@@ -39,36 +37,36 @@ class ActivityDTO(object):
 
     def to_fr8_json(self):
         return {
-            'Name': self.name,
-            'Label': self.label,
-            'ActivityTemplate': self.activity_template.to_fr8_json(),
-            'RootPlanNodeId': self.root_plan_node_id,
-            'ParentPlanNodeId': self.parent_plan_node_id,
-            'CurrentView': self.current_view,
-            'Ordering': self.ordering,
-            'Id': self.id,
-            'CrateStorage': self.crate_storage.to_fr8_json(),
-            'ChildrenActivities': [x.to_fr8_json() for x in self.children_activities],
-            'AuthTokenId': self.auth_token_id,
-            'AuthToken': self.auth_token.to_fr8_json() if self.auth_token else None,
+            'name': self.name,
+            'label': self.label,
+            'activityTemplate': self.activity_template.to_fr8_json(),
+            'rootPlanNodeId': self.root_plan_node_id,
+            'parentPlanNodeId': self.parent_plan_node_id,
+            'currentView': self.current_view,
+            'ordering': self.ordering,
+            'id': self.id,
+            'crateStorage': self.crate_storage.to_fr8_json(),
+            'childrenActivities': [x.to_fr8_json() for x in self.children_activities],
+            'authTokenId': self.auth_token_id,
+            'authToken': self.auth_token.to_fr8_json() if self.auth_token else None,
         }
 
     @staticmethod
     def from_fr8_json(json_data):
         a = ActivityDTO(
-            name=json_data.get('Name'),
-            label=json_data.get('Label'),
+            name=json_data.get('name'),
+            label=json_data.get('label'),
             activity_template=ActivityTemplateDTO.from_fr8_json(json_data.get('activityTemplate')),
-            root_plan_node_id=json_data.get('RootPlanNodeId'),
-            parent_plan_node_id=json_data.get('ParentPlanNodeId'),
-            current_view=json_data.get('CurrentView'),
-            ordering=json_data.get('Ordering'),
-            id=json_data.get('Id'),
-            crate_storage=CrateStorageDTO.from_fr8_json(json_data.get('CrateStorage')) if json_data.get('CrateStorage') else [],
-            children_activities=[ActivityDTO.from_fr8_json(x) for x in json_data.get('ChildrenActivities')]\
-                if json_data.get('ChildrenActivities') else [],
-            auth_token_id = json_data.get('AuthTokenId'),
-            auth_token = AuthorizationTokenDTO.from_fr8_json(json_data.get('AuthToken')) if json_data.get('AuthToken') else None
+            root_plan_node_id=json_data.get('rootPlanNodeId'),
+            parent_plan_node_id=json_data.get('parentPlanNodeId'),
+            current_view=json_data.get('currentView'),
+            ordering=json_data.get('ordering'),
+            id=json_data.get('id'),
+            crate_storage=CrateStorageDTO.from_fr8_json(json_data.get('crateStorage')) if json_data.get('crateStorage') else CrateStorageDTO(),
+            children_activities=[ActivityDTO.from_fr8_json(x) for x in json_data.get('childrenActivities')]\
+                if json_data.get('childrenActivities') else [],
+            auth_token_id = json_data.get('authTokenId'),
+            auth_token = AuthorizationTokenDTO.from_fr8_json(json_data.get('authToken')) if json_data.get('authToken') else None
         )
         return a
 
@@ -96,11 +94,13 @@ class ActivityResponseDTO(object):
 
 class ActivityCategoryDTO(object):
     def __init__(self, **kwargs):
+        self.id = kwargs.get('id')
         self.name = kwargs.get('name')
         self.icon_path = kwargs.get('icon_path')
 
     def to_fr8_json(self):
         return {
+            'id': self.id,
             'name': self.name,
             'iconPath': self.icon_path
         }
@@ -119,11 +119,31 @@ class ActivityCategoryDTO(object):
 
 
 ActivityCategories = utility.enum(
-    MONITORS=ActivityCategoryDTO(name="Monitor", icon_path="/Content/icons/monitor-icon-64x64.png"),
-    RECEIVERS=ActivityCategoryDTO(name="Get", icon_path="/Content/icons/get-icon-64x64.png"),
-    PROCESSORS=ActivityCategoryDTO(name="Process", icon_path="/Content/icons/process-icon-64x64.png"),
-    FORWARDERS=ActivityCategoryDTO(name="Forward", icon_path="/Content/icons/forward-icon-64x64.png"),
-    SOLUTION=ActivityCategoryDTO(name="Solution")
+    MONITORS=ActivityCategoryDTO(
+        id='417DD061-27A1-4DEC-AECD-4F468013FD24',
+        name='Triggers',
+        icon_path='/Content/icons/monitor-icon-64x64.png'
+    ),
+    RECEIVERS=ActivityCategoryDTO(
+        id='29EFB1D7-A9EA-41C5-AC60-AEF1F520E814',
+        name='Get Data',
+        icon_path='/Content/icons/get-icon-64x64.png'
+    ),
+    PROCESSORS=ActivityCategoryDTO(
+        id='69FB6D2C-2083-4696-9457-B7B152D358C2',
+        name='Process',
+        icon_path='/Content/icons/process-icon-64x64.png'
+    ),
+    FORWARDERS=ActivityCategoryDTO(
+        id='AFD7E981-A21A-4B05-B0B1-3115A5448F22',
+        name='Ship Data',
+        icon_path='/Content/icons/forward-icon-64x64.png'
+    ),
+    SOLUTION=ActivityCategoryDTO(
+        id='F9DF2AC2-2F10-4D21-B97A-987D46AD65B0',
+        name='Solution',
+        icon_path='/Content/icons/solution-icon-64x64.png'
+    )
 )
 
 
@@ -133,8 +153,6 @@ class ActivityTemplateDTO(object):
         self.name = kwargs.get('name')
         self.version = kwargs.get('version')
         self.terminal = kwargs.get('terminal')
-        self.web_service = kwargs.get('web_service')
-        self.activity_category = kwargs.get('activity_category')
         self.categories = kwargs.get('categories')
         self.needs_authentication = kwargs.get('needs_authentication', False)
         self.label = kwargs.get('label', '')
@@ -146,10 +164,8 @@ class ActivityTemplateDTO(object):
             'id': self.id,
             'name': self.name,
             'version': self.version,
-            'terminal': self.terminal.to_fr8_json(),
-            'webService': self.web_service.to_fr8_json() if self.web_service else None,
+            'terminal': self.terminal.to_fr8_json() if self.terminal else None,
             'categories': [x.to_fr8_json() for x in self.categories] if self.categories else None,
-            'category': self.activity_category,
             'needsAuthentication': self.needs_authentication,
             'label': self.label,
             'type': self.activity_type,
@@ -184,19 +200,19 @@ class AuthorizationTokenDTO(object):
 
     def to_fr8_json(self):
         return {
-            'UserId': self.user_id,
-            'Token': self.token,
-            'ExternalAccountId': self.external_account_id,
-            'ExternalStateToken': self.external_state_token
+            'userId': self.user_id,
+            'token': self.token,
+            'externalAccountId': self.external_account_id,
+            'externalStateToken': self.external_state_token
         }
 
     @staticmethod
     def from_fr8_json(json_data):
         dto = AuthorizationTokenDTO(
-            user_id=json_data.get('UserId'),
-            token=json_data.get('Token'),
-            external_account_id=json_data.get('ExternalAccountId'),
-            external_state_token=json_data.get('ExternalStateToken')
+            user_id=json_data.get('userId'),
+            token=json_data.get('token'),
+            external_account_id=json_data.get('externalAccountId'),
+            external_state_token=json_data.get('externalStateToken')
         )
         return dto
 
@@ -468,23 +484,3 @@ class TerminalDTO:
             authentication_type=json_data.get('authenticationType', AuthenticationType.NONE)
         )
         return t
-
-
-class WebServiceDTO(object):
-    def __init__(self, **kwargs):
-        self.name = kwargs.get('name')
-        self.icon_path = kwargs.get('icon_path')
-
-    def to_fr8_json(self):
-        return {
-            'name': self.name,
-            'iconPath': self.icon_path
-        }
-
-    @staticmethod
-    def from_fr8_json(json_data):
-        dto = WebServiceDTO(
-            name=json_data.get('name'),
-            icon_path=json_data.get('iconPath')
-        )
-        return dto
