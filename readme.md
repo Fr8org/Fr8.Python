@@ -1,11 +1,29 @@
-# Installing and running locally
-## For windows users
+![Fr8 Logo](https://github.com/Fr8org/Fr8Core/blob/master/Docs/img/Fr8Logo.png)
 
-1. [Install Python Tools for Visual Studio](https://microsoft.github.io/PTVS/)
-2. Open Fr8Python.sln
-3. Set up virtual environment called "venv" for Python 2.7 for "terminalTwitter" project
-4. Install packages from "requirements.txt" 
-5. Run "terminalTwitter" project
+# Fr8 Python SDK and Terminals
+
+These Python-based Fr8 Terminals work with the [Fr8 ecosystem](http://www.fr8.co). Fr8 is an open source cloud based integration platform ([iPaaS](https://en.wikipedia.org/wiki/Cloud-based_integration)).
+
+Fr8 Terminals communicate with Fr8 Hubs using RESTful endpoints, Http, and JSON. The SDK portion of this repository provides tools to make it easier for Terminals to be created and to keep things DRY. For example, there are object mapper classes that allow Python developers to avoid having to personally deal with the serialization and deserialization of Python objects into JSON.
+
+The Python SDK services are admittedly in an early stage of development. (To get a sense of the roadmap, you may want to look at the more mature [.NET SDK](https://github.com/Fr8org/Fr8Core/blob/master/Docs/ForDevelopers/SDK/.NET/Home.md))
+
+
+Currently, this repository contains a single Terminal, the Fr8 Twitter Terminal. This Terminal exposes useful Twitter services to Fr8 Plans via a set of Activities.
+
+Join the discussion here in the Issues list and in the #fr8dev-python channel on the [public Fr8 Slack Team](http://slack.fr8.co).
+
+
+## Developing a Fr8 Terminal
+
+
+1) You only need to clone this repo if you want to build or modify Fr8 Terminals written in Python. Before doing so, make sure you're familiar with Fr8 as an end user by building Fr8 Plans at the [main Fr8 website](http://fr8.co).
+
+2) Read the [development guides](https://github.com/Fr8org/Fr8Core/blob/master/Docs/ForDevelopers/DevGuideHome.md), especially the [Terminal Development Guide](https://github.com/Fr8org/Fr8Core/blob/master/Docs/ForDevelopers/DevelopmentGuides/TerminalDevelopmentGuide.md).
+
+3) Clone this repo.
+
+4) Choose a [development approach](https://github.com/Fr8org/Fr8Core/blob/master/Docs/ForDevelopers/DevelopmentGuides/ChoosingADevelopmentApproach.md).  The Fr8 service at fr8.co uses Heroku to deploy production and dev Python Terminals.  
 
 ## For Linux or Mac users
 
